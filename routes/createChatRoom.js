@@ -29,7 +29,7 @@ const router = express.Router()
 
 /**
  * @swagger
- * /:id:
+ * /:
  *   get:
  *     summary: Create Chat Room
  *     tags: [User]

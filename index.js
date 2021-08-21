@@ -13,7 +13,7 @@ const options = {
 			title: "TMW",
 			version: "1.0.0",
 			description: "TMW API",
-		},
+		}, 
 		servers: [
 			{
 				url: "http://localhost:4000",

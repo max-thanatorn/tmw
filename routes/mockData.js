@@ -425,3 +425,43 @@ module.exports = {
   getUserFromchannesls,
   register
 }
+
+
+//createChatRoom
+// {
+//   "senderProfile" : {
+//       "displayName": "I am 35",
+//       "userId": "35",
+//       "metadata": {
+//           "blockList" : ["1", "23"]
+//       },
+//       "avatarFileId": null
+//   },
+//   "receiverProfile" : {
+//       "displayName": "I am 29",
+//       "userId": "29",
+//       "metadata": {},
+//       "avatarFileId": null
+//   }
+// },
+
+//sendMessageNotification
+// {
+//   "message" : {
+//       "text" : "Hello world to 29." 
+//   },
+//   "senderProfile" : {
+//       "displayName": "I am 35",
+//       "userId": "35",
+//       "metadata": {
+//           "blockList" : ["1", "23"]
+//       },
+//       "avatarFileId": null
+//   },
+//   "receiverProfile" : {
+//       "displayName": "I am 29",
+//       "userId": "29",
+//       "metadata": {},
+//       "avatarFileId": null
+//   }
+// }
