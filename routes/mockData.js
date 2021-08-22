@@ -1,46 +1,44 @@
 const msg = {
-    "messages": [
-        {
-            "type": "text",
-            "channelSegment": 1,
-            "tags": [
-                "string"
-            ],
-            "childrenNumber": 0,
-            "isDeleted": false,
-            "editedAt": "2021-08-20T02:12:26.760Z",
-            "updatedAt": "2021-08-20T02:12:26.763Z",
-            "createdAt": "2021-08-20T02:12:26.763Z",
-            "messageId": "2",
-            "userId": "35",
-            "channelId": "6",
-            "flagCount": 0,
-            "hashFlag": null,
-            "reactions": {},
-            "reactionsCount": 0,
-            "myReactions": [],
-            "parentId": null,
-            "fileId": null,
-            "data": {
-                "text": "test send"
-            }
-        }
-    ],
-    "users": [
-        {
-            "updatedAt": "2021-08-19T09:15:33.271Z",
-            "createdAt": "2021-08-19T09:15:33.271Z",
-            "displayName": "displayName_test",
-            "userId": "35",
-            "metadata": {},
-            "roles": [],
-            "permissions": [],
-            "flagCount": 0,
-            "hashFlag": null,
-            "avatarFileId": null
-        }
-    ],
-    "files": []
+  messages: [
+    {
+      type: 'text',
+      channelSegment: 1,
+      tags: ['string'],
+      childrenNumber: 0,
+      isDeleted: false,
+      editedAt: '2021-08-20T02:12:26.760Z',
+      updatedAt: '2021-08-20T02:12:26.763Z',
+      createdAt: '2021-08-20T02:12:26.763Z',
+      messageId: '2',
+      userId: '35',
+      channelId: '6',
+      flagCount: 0,
+      hashFlag: null,
+      reactions: {},
+      reactionsCount: 0,
+      myReactions: [],
+      parentId: null,
+      fileId: null,
+      data: {
+        text: 'test send'
+      }
+    }
+  ],
+  users: [
+    {
+      updatedAt: '2021-08-19T09:15:33.271Z',
+      createdAt: '2021-08-19T09:15:33.271Z',
+      displayName: 'displayName_test',
+      userId: '35',
+      metadata: {},
+      roles: [],
+      permissions: [],
+      flagCount: 0,
+      hashFlag: null,
+      avatarFileId: null
+    }
+  ],
+  files: []
 }
 
 //บล็อกลิสอยู่ใน metadata
@@ -56,7 +54,7 @@ const profile = {
       permissions: [],
       flagCount: 0,
       hashFlag: null,
-      avatarFileId: null,
+      avatarFileId: null
     }
   ],
   files: []
@@ -396,12 +394,14 @@ const createMsg = {
 
 //user 36
 const register = {
-  accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiZmRmZWFhMGY2Yzk5YTUyNjE0NTNkMjQ3MDc1NjA0ODJjMjViZDhlYWViMzIzZDdlY2VlYWNlNGYwMWVjNjM0MjIyYTUwNDA0NjY5ZmNmODUxNDA0MTMwZTE1YzZjYjkwNWU2NTI0ZTdmNDQ3MzMwYzcyMjQyYTkzNzQ4NmY1M2QzYTVhNzQ2MWE0MGM1ODBjYWM5MGMyYjg5NzU2ZjU0ZjZmOGM2MzM0ZWQ0ZDg3YzY1Nzg5NjliMzNhNGJhOTQ2NzhhMjJkZTAxMWE5MDE3ZjhhYjFlMTZmNTYyM2QwN2FiMDY0N2Q1NDkyYzRiMzBlZmY1Y2I2NWI3NGNjMzkwYWU1MmMyYzMzMzcxZTk1IiwiaWF0IjoxNjI5NDQ1MDQxLCJleHAiOjE2NjA5ODEwNDF9.0E7WE32_2GMIX5rI35BOywoIg7hORhAt7ZvcI2h6grc',
-  refreshToken: 'bd8a7bb5cb2ac4df1bfd423be4ce63f13b60f686217b8ff6f5d8fddee841a14ed30e1bb58a1fd736',
+  accessToken:
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiZmRmZWFhMGY2Yzk5YTUyNjE0NTNkMjQ3MDc1NjA0ODJjMjViZDhlYWViMzIzZDdlY2VlYWNlNGYwMWVjNjM0MjIyYTUwNDA0NjY5ZmNmODUxNDA0MTMwZTE1YzZjYjkwNWU2NTI0ZTdmNDQ3MzMwYzcyMjQyYTkzNzQ4NmY1M2QzYTVhNzQ2MWE0MGM1ODBjYWM5MGMyYjg5NzU2ZjU0ZjZmOGM2MzM0ZWQ0ZDg3YzY1Nzg5NjliMzNhNGJhOTQ2NzhhMjJkZTAxMWE5MDE3ZjhhYjFlMTZmNTYyM2QwN2FiMDY0N2Q1NDkyYzRiMzBlZmY1Y2I2NWI3NGNjMzkwYWU1MmMyYzMzMzcxZTk1IiwiaWF0IjoxNjI5NDQ1MDQxLCJleHAiOjE2NjA5ODEwNDF9.0E7WE32_2GMIX5rI35BOywoIg7hORhAt7ZvcI2h6grc',
+  refreshToken:
+    'bd8a7bb5cb2ac4df1bfd423be4ce63f13b60f686217b8ff6f5d8fddee841a14ed30e1bb58a1fd736',
   users: [
     {
-      updatedAt: '2021-08-20T07:37:21.706Z',     
-      createdAt: '2021-08-20T07:37:21.706Z',     
+      updatedAt: '2021-08-20T07:37:21.706Z',
+      createdAt: '2021-08-20T07:37:21.706Z',
       displayName: 'displayName_test',
       userId: '36',
       metadata: {},
@@ -415,6 +415,28 @@ const register = {
   files: []
 }
 
+const profileSender = {
+  senderProfile: {
+    displayName: 'I am 35',
+    userId: '35',
+    metadata: {
+      blockList: ['4', '291']
+    },
+    avatarFileId: null
+  }
+}
+
+const profileReceiver = {
+  receiverProfile: {
+    displayName: 'I am 29',
+    userId: '29',
+    metadata: {
+      blockList: ['3']
+    },
+    avatarFileId: null
+  }
+}
+
 module.exports = {
   msg,
   profile,
@@ -423,11 +445,12 @@ module.exports = {
   createMsg,
   getChannels,
   getUserFromchannesls,
-  register
+  register,
+  profileReceiver,
+  profileSender
 }
 
-
-//createChatRoom
+//Request Body: createChatRoom
 // {
 //   "senderProfile" : {
 //       "displayName": "I am 35",
@@ -443,12 +466,35 @@ module.exports = {
 //       "metadata": {},
 //       "avatarFileId": null
 //   }
-// },
+// }
 
-//sendMessageNotification
+//Response Body: createChatRoom
+// {
+//   "senderProfile" : {
+//       "displayName": "I am 35",
+//       "userId": "35",
+//       "metadata": {
+//           "blockList" : ["1", "23"]
+//       },
+//       "avatarFileId": null
+//   },
+//   "receiverProfile" : {
+//       "displayName": "I am 29",
+//       "userId": "29",
+//       "metadata": {},
+//       "avatarFileId": null
+//   },
+//   "friendStatus" : true,
+//   "blockListStatus" : false,
+// }
+
+//================================================================
+
+//Request Body: sendMessageNotification
 // {
 //   "message" : {
-//       "text" : "Hello world to 29." 
+//       "id" : "322",
+//       "text" : "Hello world to 29."
 //   },
 //   "senderProfile" : {
 //       "displayName": "I am 35",
@@ -463,5 +509,49 @@ module.exports = {
 //       "userId": "29",
 //       "metadata": {},
 //       "avatarFileId": null
+//   }
+// }
+
+//Response Body: sendMessageNotification
+// {
+//   "status" : true
+// }
+
+//================================================================
+
+//Request body: getBadWordList
+// N/A
+
+//Response body: getBadWordList
+// {
+//   "badWordList" : [
+//       "pussy", "shit", "fuck", "ass"
+//   ]
+// }
+
+//================================================================
+
+//Request Body: updateMessageStatus
+// {
+//   "message" : {
+//       "id" : "299",
+//       "data" : "Give me 100 Baht.",
+//       "metadata" : {
+//           "type" : "transfer",
+//           "status" : "request"
+//       }
+//   }
+//   "updateToStatus" : "paid"
+// }
+
+//Response Body: updateMessageStatus
+// {
+//   "message" : {
+//       "id" : "299",
+//       "data" : "[Paid] Give me 100 Baht.",
+//       "metadata" : {
+//           "type" : "transfer",
+//           "status" : "paid"
+//       }
 //   }
 // }

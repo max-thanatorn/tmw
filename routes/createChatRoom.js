@@ -2,6 +2,163 @@ const express = require('express')
 const axios = require('axios')
 const router = express.Router()
 
+router.post('/', async (req, res) => {
+  try {
+    //get profile from req?.body
+    const senderProfile = req?.body?.senderProfile
+    const receiverProfile = req?.body?.receiverProfile
+
+    // get profile form amity backend
+    let senderAmityProfile,
+      receiverAmityProfile = {}
+
+    senderAmityProfile = await getProfileFromAmity(senderProfile?.userId)
+    receiverAmityProfile = await getProfileFromAmity(receiverProfile?.userId)
+
+    // create amity profile
+    if (!senderAmityProfile) {
+      senderAmityProfile = await registerUser(senderProfile)
+    }
+
+    // รอถามแม็กว่าต้อง register ให้คนรับด้วยไหม
+    if (!receiverAmityProfile) {
+      receiverAmityProfile = await registerUser(receiverProfile)
+    }
+
+    let senderTrueProfile,
+      receiverTrueProfile = {}
+
+    senderTrueProfile = await getProfileFromTrue(senderAmityProfile)
+    receiverTrueProfile = await getProfileFromTrue(receiverAmityProfile)
+
+    // check friend status from true backend
+    // รอถามแม็กว่าเช็กแค่ของคนส่งใช่ไหม
+    const isFriend = await checkIsFriend({
+      senderId: senderTrueProfile?.users?.userId,
+      receiverId: receiverTrueProfile?.users?.userId
+    })
+
+    // find sender user blocked
+    // can use getProfileFromAmity or senderAmityProfile.some
+    const isSenderBlockReceiver = await getBlockList(
+      senderProfile?.userId
+    ).then(res =>
+      res?.some(user => user === receiverTrueProfile?.users?.userId)
+    )
+
+    const response = {
+      senderProfile: senderTrueProfile?.users,
+      receiverProfile: receiverTrueProfile?.users,
+      friendStatus: isFriend?.isFriend,
+      blockListStatus: isSenderBlockReceiver
+    }
+
+    console.log({
+      // senderAmityProfile,
+      // receiverAmityProfile,
+      // senderTrueProfile,
+      // receiverTrueProfile,
+      response
+    })
+
+    res.send(response)
+  } catch (error) {
+    console.log(`error msg : ${error}`)
+  }
+})
+
+// getProfileFromAmity()
+// ใช้แบบจำลองเพราะข้อมูลของจริงยังไม่มี blocklist
+async function getBlockList () {
+  const blockList = {
+    metadata: {
+      blockList: ['1', '77', '32']
+    }
+  }
+  return blockList?.metadata?.blockList
+}
+
+// get profile from amity backend
+async function getProfileFromAmity (id) {
+  const token = 'a6d30ac240300caecf1b1fabeead75600999a530'
+  const configAuth = {
+    headers: { Authorization: `Bearer ${token}` }
+  }
+
+  try {
+    const profileAmity = await axios.get(
+      `https://api.amity.co/api/v3/users/${id}`,
+      configAuth
+    )
+
+    return profileAmity.data
+  } catch (error) {
+    console.log(`getAmityProfile() msg : ${error}`)
+  }
+}
+
+//register user
+async function registerUser (user) {
+  //x-api-key ของ app เก็บเป็น static ไว้ที่ .env
+  const configKeys = {
+    headers: {
+      'x-api-key': 'b0ede9583e88f9364d34de1a5a00158dd50e8ee5b934692f'
+    }
+  }
+  const postData = {
+    userId: user?.userId.toString(),
+    deviceId: 'deviceId_test',
+    deviceInfo: {
+      kind: 'ios',
+      model: 'model_test',
+      sdkVersion: 'sdkVersion_test'
+    },
+    displayName: user?.displayName.toString(),
+    authToken: 'authToken_test'
+  }
+
+  try {
+    const register = await axios.post(
+      'https://api.amity.co/api/v3/sessions',
+      postData,
+      configKeys
+    )
+    return register.data
+  } catch (error) {
+    console.log(`registerUser() msg : ${error}`)
+  }
+}
+
+// fetch profile from true
+// จำลองให้เหมือนของ amity
+async function getProfileFromTrue (user) {
+  const profile = {
+    users: {
+      updatedAt: `true ${user?.users[0]?.displayName}`,
+      createdAt: `true ${user?.users[0]?.createdAt}`,
+      displayName: `true ${user?.users[0]?.displayName}`,
+      userId: `${user?.users[0]?.userId}`,
+      metadata: {},
+      roles: [],
+      permissions: [],
+      flagCount: 0,
+      hashFlag: null,
+      avatarFileId: null
+    }
+  }
+  return profile
+}
+
+// get friend status from true
+async function checkIsFriend ({ senderId, receiverId }) {
+  const isFriend = {
+    isFriend: +senderId > +receiverId ? true : false
+  }
+  return isFriend
+}
+
+module.exports = router
+
 /**
  * @swagger
  * components:
@@ -47,142 +204,3 @@ const router = express.Router()
  *               items:
  *                 $ref: '#/components/schemas/User'
  */
-
-router.get('/', async (req, res) => {
-  //get profile from amity backend
-  const user = await getProfileAmity(req.params.id)
-  console.log('user data from amity backend', user)
-  if (!user) {
-    //case register
-    const register = await registerUser(req.params.id)
-    console.log('register User', register)
-    const result = await fetchData(register)
-    res.send(result)
-  } else {
-    //case happy flow
-    console.log('happy flow')
-    const result = await fetchData(user)
-    res.send(result)
-  }
-})
-
-//return function
-async function fetchData (data) {
-  try {
-    const profile = await fetchProfile(data?.users[0]?.userId)
-    const isFriend = await checkIsFriend(data?.users[0]?.userId)
-
-    if (!profile && !isFriend) {
-      return handlerError(500, 'user not found')
-    } else if (!profile) {
-      return handlerError(500, 'profile not found')
-    } else if (!isFriend) {
-      return handlerError(500, 'friend status not found')
-    } else {
-      const result = {
-        profile: profile?.profile,
-        isFriend: isFriend?.isFriend,
-        blockStatus: data?.users[0]?.metadata
-      }
-      console.log('result from fetchData', result)
-      return result
-    }
-  } catch (error) {
-    return console.log(`fetchData() msg : ${error}`)
-  }
-}
-
-//get profile from amity backend
-async function getProfileAmity (id) {
-  const token = 'a6d30ac240300caecf1b1fabeead75600999a530'
-  const configAuth = {
-    headers: { Authorization: `Bearer ${token}` }
-  }
-
-  try {
-    const profileAmity = await axios.get(
-      `https://api.amity.co/api/v3/users/${id}`,
-      configAuth
-    )
-
-    return profileAmity.data
-  } catch (error) {
-    console.log(`getAmityProfile() msg : ${error}`)
-  }
-}
-
-//register user
-async function registerUser (id) {
-
-  //x-api-key ของ app เก็บเป็น static ไว้ที่ .env
-  const configKeys = {
-    headers: {
-      'x-api-key': 'b0ede9583e88f9364d34de1a5a00158dd50e8ee5b934692f'
-    }
-  }
-  const postData = {
-    userId: id,
-    deviceId: 'deviceId_test',
-    deviceInfo: {
-      kind: 'ios',
-      model: 'model_test',
-      sdkVersion: 'sdkVersion_test'
-    },
-    displayName: 'displayName_test',
-    authToken: 'authToken_test'
-  }
-
-  try {
-    const register = await axios.post(
-      'https://api.amity.co/api/v3/sessions',
-      postData,
-      configKeys
-    )
-
-    return register.data
-  } catch (error) {
-    console.log(`getAmityProfile() msg : ${error}`)
-  }
-}
-
-//fetch profile from true
-async function fetchProfile (id) {
-  try {
-    const profile = await axios.get(
-      `https://0596a4bd-7902-4222-9798-26f4e30ba592.mock.pstmn.io/profile/${id}`
-    )
-
-    return profile.data
-  } catch (error) {
-    console.log(`fetchProfile() msg : ${error}`)
-  }
-}
-
-//fetch friend status from true
-async function checkIsFriend (id) {
-  try {
-    const isFriend = await axios.get(
-      `https://0596a4bd-7902-4222-9798-26f4e30ba592.mock.pstmn.io/check-friend/${id}`
-    )
-    return isFriend.data
-  } catch (error) {
-    console.log(`checkIsFriend() msg : ${error}`)
-  }
-}
-
-//custom error message
-function handlerError (statusCode, message) {
-  const msg = {
-    userProfile: {
-      status: false,
-      statusCode: statusCode,
-      message: message
-    }
-  }
-  return {
-    statusCode: statusCode,
-    body: msg
-  }
-}
-
-module.exports = router
