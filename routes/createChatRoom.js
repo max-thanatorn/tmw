@@ -5,7 +5,7 @@ const router = express.Router()
 router.post('/', async (req, res) => {
   try {
     //get profile from req?.body
-    const senderProfile = req?.body?.senderProfile
+    const senderProfile = req.body?.senderProfile
     const receiverProfile = req?.body?.receiverProfile
 
     // get profile form amity backend

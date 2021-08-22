@@ -3,6 +3,7 @@ const app = express()
 const cors = require('cors')
 const createChatRoutes = require('./routes/createChatRoom')
 const notificationRoutes = require('./routes/sendNotification')
+const updateMessageRoutes = require('./routes/updateMessageStatus')
 const swaggerUI = require('swagger-ui-express')
 const swaggerJsDoc = require('swagger-jsdoc')
 
@@ -34,5 +35,6 @@ app.use(express.json())
 
 app.use('/createChatRoom', createChatRoutes)
 app.use('/sendMessageNotification', notificationRoutes)
+app.use('/updateMessageStatus', updateMessageRoutes)
 
 app.listen(PORT, () => console.log(`The server is running on port ${PORT}`))

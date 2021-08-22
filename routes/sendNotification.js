@@ -5,7 +5,7 @@ const { profileSender, profileReceiver } = require('./mockData')
 
 router.post('/', async (req, res) => {
   try {
-    const messages = req?.body
+    const messages = req.body
     const senderId = messages?.senderProfile?.userId
     const receiverId = messages?.receiverProfile?.userId
     
