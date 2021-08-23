@@ -13,24 +13,25 @@ router.post('/', async (req, res) => {
     const senderProfile = await getProfileFromTrue('senderId')
     const receiverProfile = await getProfileFromTrue('receiverId')
 
-    // find sender user blocked
-    const isSenderBlockReceiver = await getProfileFromAmity(
+    // get sender block list
+    const senderBlockList = await getProfileFromAmity(
       'senderProfile'
-    ).then(res => res?.find(user => user === receiverId))
+    )
+
+    // get receiver block list
+    const receiverBlockList = await getProfileFromAmity(
+      'receiverProfile'
+    )
+
+    // find sender user blocked
+    const isSenderBlockReceiver = senderBlockList?.find(user => {
+      return user === receiverId
+    })
 
     //find receiver user blocked
-    const isReceiverBlockSender = await getProfileFromAmity(
-      'receiverProfile'
-    ).then(res => res?.find(user => user === senderId))
-
-    // find V2 รอถามแม็กว่าจะเอา then หรือ แยก
-    // const FindisSenderBlockReceiverV2 = list?.find(user => {
-    //   return user === receiverId
-    // })
-
-    // const FindisReceiverBlockSenderV2 = list?.find(user => {
-    //   return user === senderId
-    // })
+    const isReceiverBlockSender = receiverBlockList?.find(user => {
+      return user === senderId
+    })
 
     console.log({
       senderProfile,
