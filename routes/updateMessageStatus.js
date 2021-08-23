@@ -9,6 +9,7 @@ router.put('/', async (req, res) => {
     const searchMesseage = await getMessage(message?.id)
     console.log({ message, updateToStatus, searchMesseage })
     if (!searchMesseage) {
+      //ทำ custom error
       console.log('message not found')
       res.send('message not found')
     } else {
@@ -22,7 +23,7 @@ router.put('/', async (req, res) => {
       const response = {
         message: {
           id: messageId,
-          data: data.text,
+          data: `[${data.text}] 55555`,
           metadata: {
             type: 'transfer',
             status: data.text
@@ -39,6 +40,7 @@ router.put('/', async (req, res) => {
 
 // บอกแม็กว่าใช้ path ที่ส่ง params
 async function getMessage (id) {
+  // token ของแอดมิน
   const token = 'a6d30ac240300caecf1b1fabeead75600999a530'
   const configAuth = {
     headers: { Authorization: `Bearer ${token}` }
@@ -57,8 +59,8 @@ async function getMessage (id) {
 
 // คุยกับแม็กเรื่อง response ให้เพิ่ม status ต่อจาก data.text
 async function updateMessage ({ id, status }) {
+  // token ของแอดมิน
   const token = 'a6d30ac240300caecf1b1fabeead75600999a530'
-
   const configAuth = {
     headers: { Authorization: `Bearer ${token}` }
   }
