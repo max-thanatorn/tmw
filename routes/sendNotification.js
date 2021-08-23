@@ -36,6 +36,8 @@ router.post('/', async (req, res) => {
     console.log({
       senderProfile,
       receiverProfile,
+      senderBlockList,
+      receiverBlockList,
       isSenderBlockReceiver,
       isReceiverBlockSender
     })
