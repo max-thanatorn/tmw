@@ -38,12 +38,13 @@ router.post('/', async (req, res) => {
       receiverId: receiverTrueProfile?.users?.userId
     })
 
+    // get sender block list
+    // can use getProfileFromAmity or senderAmityProfile
+    const senderBlockList = await getBlockList(senderProfile?.userId)
+
     // find sender user blocked
-    // can use getProfileFromAmity or senderAmityProfile.some
-    const isSenderBlockReceiver = await getBlockList(
-      senderProfile?.userId
-    ).then(res =>
-      res?.some(user => user === receiverTrueProfile?.users?.userId)
+    const isSenderBlockReceiver = senderBlockList?.some(
+      user => user === receiverTrueProfile?.users?.userId
     )
 
     const response = {
@@ -72,7 +73,7 @@ router.post('/', async (req, res) => {
 async function getBlockList () {
   const blockList = {
     metadata: {
-      blockList: ['1', '77', '32']
+      blockList: ['2', '77', '32']
     }
   }
   return blockList?.metadata?.blockList
