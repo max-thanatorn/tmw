@@ -20,7 +20,6 @@ router.post('/', async (req, res) => {
       senderAmityProfile = await registerUser(senderProfile)
     }
 
-    // รอถามแม็กว่าต้อง register ให้คนรับด้วยไหม
     if (!receiverAmityProfile) {
       receiverAmityProfile = await registerUser(receiverProfile)
     }
@@ -40,6 +39,7 @@ router.post('/', async (req, res) => {
 
     // get sender block list
     // can use getProfileFromAmity or senderAmityProfile
+    // เอาของ body มาใช้ได้เลย
     const senderBlockList = await getBlockList(senderProfile?.userId)
 
     // find sender user blocked
@@ -73,7 +73,7 @@ router.post('/', async (req, res) => {
 async function getBlockList () {
   const blockList = {
     metadata: {
-      blockList: ['2', '77', '32']
+      blockList: ['29', '77', '32']
     }
   }
   return blockList?.metadata?.blockList
