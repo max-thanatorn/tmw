@@ -7,38 +7,39 @@ router.put('/', async (req, res) => {
     const { message, updateToStatus } = req.body
 
     const searchMesseage = await getMessage(message?.id)
-    console.log({ message, updateToStatus, searchMesseage })
     if (!searchMesseage) {
-      //ทำ custom error
-      console.log('message not found')
-      res.send('message not found')
+      res.sendStatus(404)
     } else {
       const updateStatus = await updateMessage({
         id: searchMesseage[0]?.messageId,
         status: updateToStatus
       })
+      console.log({ updateStatus })
 
-      const { messageId, data } = updateStatus
+      if (!updateStatus) {
+        res.sendStatus(404)
+      } else {
+        const { messageId, data } = updateStatus
 
-      const response = {
-        message: {
-          id: messageId,
-          data: `[${data.text}] 55555`,
-          metadata: {
-            type: 'transfer',
-            status: data.text
+        const response = {
+          message: {
+            id: messageId,
+            data: `[${data.text}] 55555`,
+            metadata: {
+              type: 'transfer',
+              status: data.text
+            }
           }
         }
+        res.send(response)
       }
-      console.log(response)
-      return response
     }
   } catch (error) {
     console.log(`error msg : ${error}`)
+    res.sendStatus(500)
   }
 })
 
-// บอกแม็กว่าใช้ path ที่ส่ง params
 async function getMessage (id) {
   // token ของแอดมิน
   const token = 'a6d30ac240300caecf1b1fabeead75600999a530'
@@ -54,10 +55,11 @@ async function getMessage (id) {
     return msg.data?.messages
   } catch (error) {
     console.log(`getMessage() msg : ${error}`)
+    // console.log(error.response.data)
+    // return error.response.data
   }
 }
 
-// คุยกับแม็กเรื่อง response ให้เพิ่ม status ต่อจาก data.text
 async function updateMessage ({ id, status }) {
   // token ของแอดมิน
   const token = 'a6d30ac240300caecf1b1fabeead75600999a530'

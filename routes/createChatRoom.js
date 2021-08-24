@@ -98,7 +98,7 @@ async function getProfileFromAmity (id) {
   }
 }
 
-//register user
+// register user
 async function registerUser (user) {
   //x-api-key ของ app เก็บเป็น static ไว้ที่ .env
   const configKeys = {
@@ -130,7 +130,7 @@ async function registerUser (user) {
   }
 }
 
-// fetch profile from true
+// get profile from true
 // จำลองให้เหมือนของ amity
 async function getProfileFromTrue (user) {
   const profile = {

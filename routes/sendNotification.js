@@ -33,14 +33,14 @@ router.post('/', async (req, res) => {
       return user === senderId
     })
 
-    console.log({
-      senderProfile,
-      receiverProfile,
-      senderBlockList,
-      receiverBlockList,
-      isSenderBlockReceiver,
-      isReceiverBlockSender
-    })
+    // console.log({
+    //   senderProfile,
+    //   receiverProfile,
+    //   senderBlockList,
+    //   receiverBlockList,
+    //   isSenderBlockReceiver,
+    //   isReceiverBlockSender
+    // })
 
     if (!isSenderBlockReceiver) {
       return !isReceiverBlockSender
