@@ -50,6 +50,8 @@ async function updateMessageStatus (data) {
     return updateMsg
   } catch (error) {
     console.log(`updateMessageStatus() msg : ${error}`)
+    console.log(error.response.data)
+
   }
 }
 
