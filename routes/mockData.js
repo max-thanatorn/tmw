@@ -555,3 +555,15 @@ module.exports = {
 //       }
 //   }
 // }
+
+
+//Request Body: transferMoneySuccess
+// {
+//   "transferId" : "t-122454566",
+//   "messageId" : "3",
+//   "amt" : "100",
+//   "currency" : "baht",
+//   "timestamp" : "timestamp",
+//   "sender" : "29",
+//   "receiver" : "35"
+// }
