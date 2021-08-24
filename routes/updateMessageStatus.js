@@ -7,9 +7,9 @@ router.put('/', async (req, res) => {
     const { message, updateToStatus } = req.body
 
     const searchMesseage = await getMessage(message?.id)
-    console.log('searchMesseage', searchMesseage)
+    
     if (!searchMesseage) {
-      res.status(404).json({error: 'Request failed with status code 404'})
+      res.status(404).json({ error: 'Request failed with status code 404' })
     } else {
       const updateStatus = await updateMessage({
         id: searchMesseage[0]?.messageId,
@@ -17,7 +17,7 @@ router.put('/', async (req, res) => {
       })
 
       if (!updateStatus) {
-        res.status(404).json({error: 'Request failed with status code 404'})
+        res.status(404).json({ error: 'Request failed with status code 404' })
       } else {
         const { messageId, data } = updateStatus
 
