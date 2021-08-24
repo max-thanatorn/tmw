@@ -6,8 +6,9 @@ router.post('/', async (req, res) => {
   try {
     //get profile from req?.body
     const senderProfile = req.body?.senderProfile
-    const receiverProfile = req?.body?.receiverProfile
-
+    const receiverProfile = req.body?.receiverProfile
+    const senderBlockList = req.body?.senderProfile?.metadata?.blockList
+    
     // get profile form amity backend
     let senderAmityProfile,
       receiverAmityProfile = {}
@@ -39,8 +40,8 @@ router.post('/', async (req, res) => {
 
     // get sender block list
     // can use getProfileFromAmity or senderAmityProfile
-    // เอาของ body มาใช้ได้เลย
-    const senderBlockList = await getBlockList(senderProfile?.userId)
+    // ver เก่าก่อนที่จะไปใช้ req.body
+    // const senderBlockList = await getBlockList(senderProfile?.userId)
 
     // find sender user blocked
     const isSenderBlockReceiver = senderBlockList?.some(
@@ -70,14 +71,14 @@ router.post('/', async (req, res) => {
 
 // getProfileFromAmity()
 // ใช้แบบจำลองเพราะข้อมูลของจริงยังไม่มี blocklist
-async function getBlockList () {
-  const blockList = {
-    metadata: {
-      blockList: ['29', '77', '32']
-    }
-  }
-  return blockList?.metadata?.blockList
-}
+// async function getBlockList () {
+//   const blockList = {
+//     metadata: {
+//       blockList: ['29', '77', '32']
+//     }
+//   }
+//   return blockList?.metadata?.blockList
+// }
 
 // get profile from amity backend
 async function getProfileFromAmity (id) {

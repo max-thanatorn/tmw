@@ -420,7 +420,7 @@ const profileSender = {
     displayName: 'I am 35',
     userId: '35',
     metadata: {
-      blockList: ['291', '291']
+      blockList: ['291', '2931']
     },
     avatarFileId: null
   }
@@ -431,7 +431,7 @@ const profileReceiver = {
     displayName: 'I am 29',
     userId: '29',
     metadata: {
-      blockList: ['33']
+      blockList: ['3']
     },
     avatarFileId: null
   }

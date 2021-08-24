@@ -8,20 +8,16 @@ router.post('/', async (req, res) => {
     const messages = req.body
     const senderId = messages?.senderProfile?.userId
     const receiverId = messages?.receiverProfile?.userId
-    
+
     // check user profile with true backend
     const senderProfile = await getProfileFromTrue('senderId')
     const receiverProfile = await getProfileFromTrue('receiverId')
 
     // get sender block list
-    const senderBlockList = await getProfileFromAmity(
-      'senderProfile'
-    )
+    const senderBlockList = await getProfileFromAmity('senderProfile')
 
     // get receiver block list
-    const receiverBlockList = await getProfileFromAmity(
-      'receiverProfile'
-    )
+    const receiverBlockList = await getProfileFromAmity('receiverProfile')
 
     // find sender user blocked
     const isSenderBlockReceiver = senderBlockList?.find(user => {
@@ -43,18 +39,18 @@ router.post('/', async (req, res) => {
     // })
 
     if (!isSenderBlockReceiver) {
-      return !isReceiverBlockSender
-        ? sentNotification({ id: receiverId, msg: messages })
-        : sentMessage({ id: receiverId, msg: messages })
+      !isReceiverBlockSender
+        ? res.send(sentNotification({ id: receiverId, msg: messages }))
+        : res.send(sentMessage({ id: receiverId, msg: messages }))
     } else {
-      return sentMessage({ id: receiverId, msg: messages })
+      res.send(sentMessage({ id: receiverId, msg: messages }))
     }
   } catch (error) {
     console.log(`error msg : ${error}`)
   }
 })
 
-async function sentNotification ({ id, msg }) {
+function sentNotification ({ id, msg }) {
   const status = {
     status: true
   }
@@ -62,7 +58,7 @@ async function sentNotification ({ id, msg }) {
   return status
 }
 
-async function sentMessage ({ id, msg }) {
+function sentMessage ({ id, msg }) {
   const status = {
     status: false
   }

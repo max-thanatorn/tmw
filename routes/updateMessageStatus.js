@@ -14,7 +14,6 @@ router.put('/', async (req, res) => {
         id: searchMesseage[0]?.messageId,
         status: updateToStatus
       })
-      console.log({ updateStatus })
 
       if (!updateStatus) {
         res.sendStatus(404)

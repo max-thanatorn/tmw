@@ -7,15 +7,12 @@ router.post('/', async (req, res) => {
     const transfer = req.body
 
     const updateMessage = await updateMessageStatus(transfer)
-    console.log('updateMessage', updateMessage)
+    // console.log('updateMessage', updateMessage)
 
     if (updateMessage) {
       const sendNoti = await sendMessageNotification(transfer)
-      if (sendNoti) {
-        res.send('sendNoti')
-      } else {
-        res.send('xxxxx')
-      }
+      console.log('sendNoti', sendNoti)
+      sendNoti ? res.send('777') : res.send('888')
     } else {
       res.send('qqqq')
     }
@@ -50,7 +47,6 @@ async function updateMessageStatus (data) {
       postData,
       configAuth
     )
-    console.log('updateMsg', updateMsg.status)
     return updateMsg
   } catch (error) {
     console.log(`updateMessageStatus() msg : ${error}`)
@@ -92,8 +88,7 @@ async function sendMessageNotification (data) {
       postData,
       configAuth
     )
-    console.log('sendNoti.data', sendNoti.data)
-    return sendNoti.data
+    return sendNoti
   } catch (error) {
     console.log(`sendMessageNotification() msg : ${error}`)
   }
