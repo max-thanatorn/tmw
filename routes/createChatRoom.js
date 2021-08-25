@@ -32,7 +32,6 @@ router.post('/', async (req, res) => {
     receiverTrueProfile = await getProfileFromTrue(receiverAmityProfile)
 
     // check friend status from true backend
-    // รอถามแม็กว่าเช็กแค่ของคนส่งใช่ไหม
     const isFriend = await checkIsFriend({
       senderId: senderTrueProfile?.users?.userId,
       receiverId: receiverTrueProfile?.users?.userId
@@ -108,14 +107,14 @@ async function registerUser (user) {
     }
   }
   const postData = {
-    userId: user?.userId.toString(),
+    userId: user?.userId?.toString(),
     deviceId: 'deviceId_test',
     deviceInfo: {
       kind: 'ios',
       model: 'model_test',
       sdkVersion: 'sdkVersion_test'
     },
-    displayName: user?.displayName.toString(),
+    displayName: user?.displayName?.toString(),
     authToken: 'authToken_test'
   }
 
